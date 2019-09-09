@@ -282,8 +282,8 @@ class MStoreDokan extends WP_REST_Controller {
             $data['rating']                = $store->get_rating();
         }else{
             $meta = get_user_meta($author_id); 
-            $meta = array_filter( array_map( function( $a ) {
-                    return $a[0];
+            $meta = array_filter( array_map( function( $item ) {
+                    return $item[0];
             }, $meta ) );
             $data['store'] = $meta;
             global $wpdb;
