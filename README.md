@@ -2,7 +2,7 @@
 
 Contributors: InsireUI
 
-Plugin link: https://github.com/inspireui/mstore-checkout
+Plugin link: `https://github.com/inspireui/mstore-checkout`
 
 Tags: mstore, react native, mobile plugin
 
@@ -14,7 +14,7 @@ Stable tag: 1.0.0
 
 License: GPLv2 or later
 
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: `http://www.gnu.org/licenses/gpl-2.0.html`
 
 
 The MStore Settings and APIs for supporting the mobile app by React Native framework
