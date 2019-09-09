@@ -108,7 +108,7 @@ function registerJsonApiController($aControllers)
     return $aControllers;
 }
 
-function setMstoreUserControllerPath($sDefaultPath)
+function setMstoreUserControllerPath()
 {
     return dirname(__FILE__) . '/controllers/MstoreUser.php';
 }

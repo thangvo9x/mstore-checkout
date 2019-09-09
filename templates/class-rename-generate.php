@@ -34,8 +34,8 @@ add_filter( 'wp_generate_attachment_metadata', 'bt_generate_attachment_metadata'
  * @return bool|array False, if no image was created. Metadata array on success.
  */
 function bt_add_image_size( $name, $width = 0, $height = 0, $crop = false ) {
-	global $_wp_additional_image_sizes;
-	$_wp_additional_image_sizes[$name] = array( 'width' => absint( $width ), 'height' => absint( $height ), 'crop' => $crop );
+	global $additional_img_sizes;
+	$additional_img_sizes[$name] = array( 'width' => absint( $width ), 'height' => absint( $height ), 'crop' => $crop );
 }
 
 
@@ -58,20 +58,20 @@ function bt_generate_attachment_metadata( $metadata, $attachment_id ) {
 
 	if ( !preg_match('!^image/!', get_post_mime_type( $attachment )) || !file_is_displayable_image( $file ) ) return $metadata;
 
-    global $_wp_additional_image_sizes;
+    global $additional_img_sizes;
 
     foreach ( get_intermediate_image_sizes() as $s ) {
         $sizes[$s] = array( 'width' => '', 'height' => '', 'crop' => FALSE );
-        if ( isset( $_wp_additional_image_sizes[$s]['width'] ) )
-            $sizes[$s]['width'] = intval( $_wp_additional_image_sizes[$s]['width'] ); // For theme-added sizes
+        if ( isset( $additional_img_sizes[$s]['width'] ) )
+            $sizes[$s]['width'] = intval( $additional_img_sizes[$s]['width'] ); // For theme-added sizes
         else
             $sizes[$s]['width'] = get_option( "{$s}_size_w" ); // For default sizes set in options
-        if ( isset( $_wp_additional_image_sizes[$s]['height'] ) )
-            $sizes[$s]['height'] = intval( $_wp_additional_image_sizes[$s]['height'] ); // For theme-added sizes
+        if ( isset( $additional_img_sizes[$s]['height'] ) )
+            $sizes[$s]['height'] = intval( $additional_img_sizes[$s]['height'] ); // For theme-added sizes
         else
             $sizes[$s]['height'] = get_option( "{$s}_size_h" ); // For default sizes set in options
-        if ( isset( $_wp_additional_image_sizes[$s]['crop'] ) )
-            $sizes[$s]['crop'] = $_wp_additional_image_sizes[$s]['crop'];
+        if ( isset( $additional_img_sizes[$s]['crop'] ) )
+            $sizes[$s]['crop'] = $additional_img_sizes[$s]['crop'];
         else
             $sizes[$s]['crop'] = get_option( "{$s}_crop" );
     }

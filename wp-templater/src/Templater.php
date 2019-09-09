@@ -63,7 +63,7 @@ class Templater
      * @access protected
      * @var string
      */
-    protected $plugin_template_directory;
+    protected $p_template_directory;
     /**
      * The array of templates that this plugin tracks.
      *
@@ -79,7 +79,7 @@ class Templater
      * $settings = array(
      *     'plugin_directory'          => plugin_dir_path(__FILE__),
      *     'plugin_prefix'             => 'plugin_prefix_',
-     *     'plugin_template_directory' => 'templates', // or 'templates/sub-folder'
+     *     'p_template_directory' => 'templates', // or 'templates/sub-folder'
      * );
      *
      * @since 1.0.0
@@ -103,8 +103,8 @@ class Templater
             }
 
             // set plugin template directory
-            if (isset($settings['plugin_template_directory'])) {
-                $this->plugin_template_directory = $settings['plugin_template_directory'];
+            if (isset($settings['p_template_directory'])) {
+                $this->p_template_directory = $settings['p_template_directory'];
             }
 
         }
@@ -147,7 +147,7 @@ class Templater
         // handle templates for WP version 4.6 and older
         if (version_compare($wp_version, '4.7', '<')) {
 
-            foreach ($templates as $type => $custom_templates) {
+            foreach ($templates as $custom_templates) {
 
                 if (!empty($custom_templates) && is_array($custom_templates)) {
 
@@ -387,7 +387,7 @@ class Templater
             // filter tag name: {plugin_prefix_}override_plugin_custom_template'
             $this->plugin_prefix . 'override_plugin_custom_template',
             // full path of custom template file: $template_file
-            $this->plugin_directory . $this->plugin_template_directory . '/' . get_post_meta($post->ID, '_wp_page_template', true)
+            $this->plugin_directory . $this->p_template_directory . '/' . get_post_meta($post->ID, '_wp_page_template', true)
         );
 
         // our new plugin template exists? use it

@@ -144,18 +144,6 @@ class PageTemplater
         $result = $wpdb->get_results($sql,OBJECT);
         if(empty($result)){
             $pageguid = site_url() . "/mstore-checkout";
-            // Create post object
-            $new_args = array(
-                'post_type'     => 'page',
-                'post_title'    => 'MStore Check Out',            
-                'post_name'     => 'mstore-checkout',
-                'guid'          => $pageguid,
-                'post_status'   => 'publish',
-                'post_author'   => 1,
-                'ping_status'   => 'closed',
-                'comment_status' => 'closed',
-                'menu_order'    => 0,
-            );
             // Insert the post into the database
             $wpdb->insert( 
                 $table_insert, 
