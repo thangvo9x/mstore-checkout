@@ -22,9 +22,9 @@ class JSON_API_MStore_User_Controller
         // allow only connection over https. because, well, you care about your passwords and sniffing.
         // turn this sanity-check off if you feel safe inside your localhost or intranet.
         // send an extra POST parameter: insecure=cool
-        if (empty($_SERVER['HTTPS']) ||
-            (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'off')) {
-            if (empty($_REQUEST['insecure']) || $_REQUEST['insecure'] != 'cool') {
+        if (filter_has_var(INPUT_SERVER, $_SERVER['HTTPS']) ||
+            (isset($_SERVER['HTTPS']) && filter_has_var(INPUT_SERVER, $_SERVER['HTTPS']) && $_SERVER['HTTPS']== 'off')) {
+            if (filter_has_var(INPUT_GET, $_REQUEST['insecure']) && empty($_REQUEST['insecure']) || $_REQUEST['insecure'] != 'cool') {
                 $json_api->error("SSL is not enabled. Either use _https_ or provide 'insecure' var as insecure=cool to confirm you want to use http protocol.");
             }
         }
@@ -95,13 +95,15 @@ class JSON_API_MStore_User_Controller
 
                     //Everything has been validated, proceed with creating the user
                     //Create the user
-                    if (!isset($_REQUEST['user_pass'])) {
+                    if (filter_has_var(INPUT_GET,$_REQUEST['user_pass']) && !isset($_REQUEST['user_pass'])) {
                         $user_pass = wp_generate_password();
                         $_REQUEST['user_pass'] = $user_pass;
                     }
 
-                    $_REQUEST['user_login'] = $username;
-                    $_REQUEST['user_email'] = $email;
+                    if(filter_has_var(INPUT_GET,$_REQUEST['user_login']) && filter_has_var(INPUT_GET,$_REQUEST['user_email'])){
+                        $_REQUEST['user_login'] = $username;
+                        $_REQUEST['user_email'] = $email;
+                    }
 
                     $allowed_params = array('user_login', 'user_email', 'user_pass', 'display_name', 'user_nicename', 'user_url', 'nickname', 'first_name',
                         'last_name', 'description', 'rich_editing', 'user_registered', 'role', 'jabber', 'aim', 'yim',
@@ -109,10 +111,10 @@ class JSON_API_MStore_User_Controller
                     );
 
 
-                    foreach ($_REQUEST as $field => $value) {
-
-                        if (in_array($field, $allowed_params)) $user[$field] = trim(sanitize_text_field($value));
-
+                    if(filter_has_var(INPUT_GET, $_REQUEST)){
+                        foreach ($_REQUEST as $field => $value) {
+                            if (in_array($field, $allowed_params)) $user[$field] = trim(sanitize_text_field($value));
+                        }
                     }
                     $user['role'] = $json_api->query->role ? sanitize_text_field($json_api->query->role) : get_option('default_role');
                     $user_id = wp_insert_user($user);
@@ -431,8 +433,8 @@ class JSON_API_MStore_User_Controller
     $comment_approved = 0;
     $user_info = get_userdata(  $user_id );
      $time = current_time('mysql');
-     $agent = $_SERVER['HTTP_USER_AGENT'];
-     $ip=$_SERVER['REMOTE_ADDR'];
+     $agent = filter_has_var(INPUT_SERVER, $_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Mozilla';
+     $ip= filter_has_var(INPUT_SERVER, $_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
         $data = array(
       'comment_post_ID' => $json_api->query->post_id,
       'comment_author' => $user_info->user_login,

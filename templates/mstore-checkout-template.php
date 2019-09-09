@@ -9,7 +9,7 @@ function getValue(&$val, $default = '')
 }
 
 
-if (isset($_GET['order'])):
+if (isset($_GET['order']) && !empty($_GET['order']))
     global $woocommerce;
     $data = json_decode(urldecode(base64_decode($_GET['order'])), true);
 
