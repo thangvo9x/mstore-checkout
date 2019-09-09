@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// use MstoreCheckout\Templates\MobileDetect\Mobile_Detect;
+// use MstoreCheckout\Templates\MobileDetect\MDetect;
 include plugin_dir_path(__FILE__).'templates/class-mobile-detect.php';
 include plugin_dir_path(__FILE__).'templates/class-rename-generate.php';
 
@@ -49,7 +49,7 @@ class MstoreCheckOut
     {
         // default return true for getting checkout library working
         if (is_order_received_page()) {
-            $detect = new Mobile_Detect;
+            $detect = new MDetect;
             if ($detect->isMobile()) {
                 wp_register_style('mstore-order-custom-style', plugins_url('assets/css/mstore-order-style.css', MSTORE_PLUGIN_FILE));
                 wp_enqueue_style('mstore-order-custom-style');
@@ -113,7 +113,7 @@ function setMstoreUserControllerPath()
     return dirname(__FILE__) . '/controllers/MstoreUser.php';
 }
 
-function json_api_mstore_user_checkAuthCookie($sDefaultPath)
+function json_api_mstore_user_checkAuthCookie()
 {
     global $json_api;
 
