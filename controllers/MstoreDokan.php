@@ -103,8 +103,8 @@ class MStoreDokan extends WP_REST_Controller {
 
         foreach ( $results as $key => $result ) {
             $meta = get_user_meta( $result->data->ID );
-            $meta = array_filter( array_map( function( $a ) {
-                    return $a[0];
+            $meta = array_filter( array_map( function( $item ) {
+                    return $item[0];
             }, $meta ) );
             $meta['id'] = $result->data->ID;
             $vendors[] = $meta;
@@ -295,7 +295,7 @@ class MStoreDokan extends WP_REST_Controller {
                 AND ( cm.meta_key = 'rating' OR cm.meta_key IS NULL) AND wc.comment_approved = 1
                 ORDER BY wc.comment_post_ID";
     
-            $result = $wpdb->get_row( $wpdb->prepare( $sql, $object->ID ) );
+            $result = $wpdb->get_row( $wpdb->prepare( $sql, $product->get_id() ) );
     
             $rating_value =  array(
                 'rating' => number_format( $result->average, 2 ),

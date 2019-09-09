@@ -51,9 +51,9 @@ class JSON_API_MStore_User_Controller
             $json_api->error("You must include 'nonce' var in your request. Use the 'get_nonce' Core API method. ");
         } else $nonce = sanitize_text_field($json_api->query->nonce);
 
-        if (!$json_api->query->display_name) {
-            $json_api->error("You must include 'display_name' var in your request. ");
-        } else $display_name = sanitize_text_field($json_api->query->display_name);
+        // if (!$json_api->query->display_name) {
+        //     $json_api->error("You must include 'display_name' var in your request. ");
+        // } else $display_name = sanitize_text_field($json_api->query->display_name);
 
         $user_pass = sanitize_text_field($_REQUEST['user_pass']);
 
