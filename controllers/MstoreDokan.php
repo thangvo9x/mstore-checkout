@@ -296,11 +296,11 @@ class MStoreDokan extends WP_REST_Controller
             $sql = "SELECT AVG(cm.meta_value) as average, COUNT(wc.comment_ID) as count FROM $wpdb->posts p
                 INNER JOIN $wpdb->comments wc ON p.ID = wc.comment_post_ID
                 LEFT JOIN $wpdb->commentmeta cm ON cm.comment_id = wc.comment_ID
-                WHERE p.post_author = %d AND p.post_type = %s AND p.post_status = %s
-                AND ( cm.meta_key = %s OR cm.meta_key IS NULL) AND wc.comment_approved = %d
+                WHERE p.post_author = %s AND p.post_type = %s AND p.post_status = %s
+                AND ( cm.meta_key = %s OR cm.meta_key IS NULL) AND wc.comment_approved = %s
                 ORDER BY wc.comment_post_ID";
             
-            $result = $wpdb->get_row($wpdb->prepare($sql, $author_id, 'product', 'publish', 'rating', 1), OBJECT);
+            $result = $wpdb->query($wpdb->prepare($sql, $author_id, 'product', 'publish', 'rating', 1));
             $rating_value = array(
                 'rating' => number_format($result->average, 2),
                 'count' => (int) $result->count,
