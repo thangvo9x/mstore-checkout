@@ -13,8 +13,8 @@
 defined('ABSPATH');
 
 // use MstoreCheckout\Templates\MobileDetect\MDetect;
-include plugin_dir_path(__FILE__) . 'templates/class-mobile-detect.php';
-include plugin_dir_path(__FILE__) . 'templates/class-rename-generate.php';
+include (plugin_dir_path(__FILE__) . 'templates/class-mobile-detect.php');
+include (plugin_dir_path(__FILE__) . 'templates/class-rename-generate.php');
 
 class MstoreCheckOut
 {
@@ -24,7 +24,7 @@ class MstoreCheckOut
     {
         define('MSTORE_CHECKOUT_VERSION', $this->version);
         define('MSTORE_PLUGIN_FILE', __FILE__);
-        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        include_once (ABSPATH . 'wp-admin/includes/plugin.php');
         if (is_plugin_active('woocommerce/woocommerce.php') == false) {
             return 0;
         }
@@ -34,7 +34,7 @@ class MstoreCheckOut
             add_filter('woocommerce_is_checkout', '__return_true');
         }
 
-        include_once plugin_dir_path(__FILE__) . 'controllers/MstoreDokan.php';
+        include_once (plugin_dir_path(__FILE__) . 'controllers/MstoreDokan.php');
         /* Checkout Template*/
 //        require_once('templates/class-page-templater.php');
         //        add_action('plugins_loaded', array('PageTemplater', 'get_instance'));
@@ -60,7 +60,7 @@ class MstoreCheckOut
 $mstoreCheckOut = new MstoreCheckOut();
 
 // use JO\Module\Templater\Templater;
-include plugin_dir_path(__FILE__) . 'wp-templater/src/Templater.php';
+include (plugin_dir_path(__FILE__) . 'wp-templater/src/Templater.php');
 
 add_action('plugins_loaded', 'load_templater');
 function load_templater()

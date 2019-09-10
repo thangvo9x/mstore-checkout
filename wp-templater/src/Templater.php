@@ -275,7 +275,7 @@ class Templater
     {
 
         // create the key used for the themes cache
-        $cache_key = 'page_templates-' . md5(get_theme_root() . '/' . get_stylesheet());
+        $cache_key = 'page_templates-' . hash('sha256', get_theme_root() . '/' . get_stylesheet());
 
         /**
          * Retrieve the cache list.
@@ -391,7 +391,7 @@ class Templater
         );
 
         // our new plugin template exists? use it
-        if (file_exists($plugin_template)) {
+        if (is_dir($plugin_template)) {
             return $plugin_template;
         }
 

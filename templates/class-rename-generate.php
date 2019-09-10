@@ -63,11 +63,11 @@ function bt_generate_attachment_metadata( $metadata, $attachment_id ) {
     foreach ( get_intermediate_image_sizes() as $s ) {
         $sizes[$s] = array( 'width' => '', 'height' => '', 'crop' => FALSE );
         if ( isset( $additional_img_sizes[$s]['width'] ) )
-            $sizes[$s]['width'] = intval( $additional_img_sizes[$s]['width'] ); // For theme-added sizes
+            $sizes[$s]['width'] = (int)( $additional_img_sizes[$s]['width'] ); // For theme-added sizes
         else
             $sizes[$s]['width'] = get_option( "{$s}_size_w" ); // For default sizes set in options
         if ( isset( $additional_img_sizes[$s]['height'] ) )
-            $sizes[$s]['height'] = intval( $additional_img_sizes[$s]['height'] ); // For theme-added sizes
+            $sizes[$s]['height'] = (int)( $additional_img_sizes[$s]['height'] ); // For theme-added sizes
         else
             $sizes[$s]['height'] = get_option( "{$s}_size_h" ); // For default sizes set in options
         if ( isset( $additional_img_sizes[$s]['crop'] ) )
@@ -159,11 +159,11 @@ function bt_image_resize_dimensions($orig_w, $orig_h, $dest_w, $dest_h, $crop = 
 		$new_h = min($dest_h, $orig_h);
 
 		if ( !$new_w ) {
-			$new_w = intval($new_h * $aspect_ratio);
+			$new_w = (int)($new_h * $aspect_ratio);
 		}
 
 		if ( !$new_h ) {
-			$new_h = intval($new_w / $aspect_ratio);
+			$new_h = (int)($new_w / $aspect_ratio);
 		}
 
 		$size_ratio = max($new_w / $orig_w, $new_h / $orig_h);
@@ -317,7 +317,7 @@ function bt_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, 
 	// Set correct file permissions
 	$stat = stat( dirname( $destfilename ));
 	$perms = $stat['mode'] & 0000666; //same permissions as parent folder, strip off the executable bits
-	@ chmod( $destfilename, $perms );
+	@ chmod( $destfilename, octdec($perms) );
 
 	return $destfilename;
 }

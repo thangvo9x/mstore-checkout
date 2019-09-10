@@ -17,7 +17,7 @@ if (filter_has_var(INPUT_GET, 'order')):
     $userId = wp_validate_auth_cookie($data['token'], 'logged_in');
 
     if (!$userId) {
-        print_r("Invalid authentication cookie. Please try to login again!");
+        echo "Invalid authentication cookie. Please try to login again!";
         return;
     }
 
