@@ -60,7 +60,7 @@ class JSON_API_MStore_User_Controller
         //     $json_api->error("You must include 'display_name' var in your request. ");
         // } else $display_name = sanitize_text_field($json_api->query->display_name);
 
-        $user_pass = sanitize_text_field($_REQUEST['user_pass']);
+        $user_pass = filter_has_var(INPUT_GET, 'user_pass') ? sanitize_text_field($_REQUEST['user_pass']) : '';
 
         if ($json_api->query->seconds) {
             $seconds = (int) $json_api->query->seconds;
@@ -102,12 +102,12 @@ class JSON_API_MStore_User_Controller
 
                     //Everything has been validated, proceed with creating the user
                     //Create the user
-                    if (filter_has_var(INPUT_GET, $_REQUEST['user_pass']) && !isset($_REQUEST['user_pass'])) {
+                    if (!filter_input(INPUT_GET, 'user_pass')) {
                         $user_pass = wp_generate_password();
                         $_REQUEST['user_pass'] = $user_pass;
                     }
 
-                    if (filter_has_var(INPUT_GET, $_REQUEST['user_login']) && filter_has_var(INPUT_GET, $_REQUEST['user_email'])) {
+                    if (filter_input(INPUT_GET, 'user_login') && filter_input(INPUT_GET, 'user_email')) {
                         $_REQUEST['user_login'] = $username;
                         $_REQUEST['user_email'] = $email;
                     }
@@ -117,7 +117,7 @@ class JSON_API_MStore_User_Controller
                         'comment_shortcuts', 'admin_color', 'use_ssl', 'show_admin_bar_front',
                     );
 
-                    if (filter_has_var(INPUT_GET, $_REQUEST)) {
+                    if (filter_input_array(INPUT_GET, $_REQUEST)) {
                         foreach ($_REQUEST as $field => $value) {
                             if (in_array($field, $allowed_params)) {
                                 $user[$field] = trim(sanitize_text_field($value));
@@ -131,9 +131,9 @@ class JSON_API_MStore_User_Controller
                     /*Send e-mail to admin and new user -
                     You could create your own e-mail instead of using this function*/
 
-                    if (filter_has_var(INPUT_GET, $_REQUEST['user_pass']) && isset($_REQUEST['user_pass']) && filter_has_var(INPUT_GET, $_REQUEST['notify']) && $_REQUEST['notify'] == 'no') {
+                    if (filter_input(INPUT_GET, 'user_pass') && filter_input(INPUT_GET, 'notify') && $_REQUEST['notify'] == 'no') {
                         $notify = '';
-                    } elseif (filter_has_var(INPUT_GET, $_REQUEST['notify']) && $_REQUEST['notify'] != 'no') {
+                    } elseif (filter_input(INPUT_GET, 'notify') && $_REQUEST['notify'] != 'no') {
                         $notify = $_REQUEST['notify'];
                     }
 

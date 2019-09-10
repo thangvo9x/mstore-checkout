@@ -706,7 +706,7 @@ if (!class_exists('MDetect')) {
         {
             // use global _SERVER if $httpHeaders aren't defined
             if (!is_array($httpHeaders) || !count($httpHeaders)) {
-                $httpHeaders = filter_has_var(INPUT_SERVER, $_SERVER) ? $_SERVER : 'Mozilla';
+                $httpHeaders = isset($_SERVER) && filter_has_var(INPUT_SERVER, $_SERVER) ? $_SERVER : 'Mozilla';
             }
 
             // clear existing headers
