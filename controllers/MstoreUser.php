@@ -124,14 +124,14 @@ class JSON_API_MStore_User_Controller
                         'comment_shortcuts', 'admin_color', 'use_ssl', 'show_admin_bar_front',
                     );
 
-                    if (filter_has_var(INPUT_GET, $_REQUEST)) {
-                        foreach (filter_input_array(INPUT_GET, $_REQUEST) as $field => $value) {
-                            if (in_array($field, $allowed_params)) {
-                                $user[$field] = trim(sanitize_text_field($value));
-                            }
-
+                    $dataRequest = filter_input_array(INPUT_GET, $_REQUEST);
+                    foreach ($dataRequest as $field => $value) {
+                        if (in_array($field, $allowed_params)) {
+                            $user[$field] = trim(sanitize_text_field($value));
                         }
+
                     }
+                    
                     $user['role'] = $json_api->query->role ? sanitize_text_field($json_api->query->role) : get_option('default_role');
                     $user_id = wp_insert_user($user);
 
@@ -184,8 +184,9 @@ class JSON_API_MStore_User_Controller
 
         global $json_api;
 
-        foreach ($_POST as $k => $val) {
-            if (isset($_POST[$k])) {
+        $dataPost = filter_input_array(INPUT_POST, $_POST);
+        foreach ($dataPost as $k => $val) {
+            if (filter_has_var(INPUT_POST,$k)) {
                 $json_api->query->$k = $val;
             }
         }

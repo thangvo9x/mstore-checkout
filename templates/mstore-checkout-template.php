@@ -364,12 +364,12 @@ if (filter_has_var(INPUT_GET, 'order')):
                                                             ?>
                                                             <tr class="<?= esc_attr(apply_filters('woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key)); ?>">
                                                                 <td class="product-name">
-                                                                    <?= apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key) . '&nbsp;'; ?>
-                                                                    <?= apply_filters('woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf('&times; %s', $cart_item['quantity']) . '</strong>', $cart_item, $cart_item_key); ?>
-                                                                    <?= WC()->cart->get_item_data($cart_item); ?>
+                                                                    <?= esc_html(apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key)) . '&nbsp;'; ?>
+                                                                    <?= esc_html(apply_filters('woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf('&times; %s', $cart_item['quantity']) . '</strong>', $cart_item, $cart_item_key)); ?>
+                                                                    <?= esc_html(WC()->cart->get_item_data($cart_item)); ?>
                                                                 </td>
                                                                 <td class="product-total">
-                                                                    <?= apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal($_product, $cart_item['quantity']), $cart_item, $cart_item_key); ?>
+                                                                    <?= esc_html(apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal($_product, $cart_item['quantity']), $cart_item, $cart_item_key)); ?>
                                                                 </td>
                                                             </tr>
                                                             <?php
@@ -413,7 +413,7 @@ if (filter_has_var(INPUT_GET, 'order')):
                                                     <?php if (wc_tax_enabled() && 'excl' === WC()->cart->tax_display_cart) : ?>
                                                         <?php if ('itemized' === get_option('woocommerce_tax_total_display')) : ?>
                                                             <?php foreach (WC()->cart->get_tax_totals() as $code => $tax) : ?>
-                                                                <tr class="tax-rate tax-rate-<?= sanitize_title($code); ?>">
+                                                                <tr class="tax-rate tax-rate-<?= esc_attr(sanitize_title($code)); ?>">
                                                                     <th><?= esc_html($tax->label); ?></th>
                                                                     <td><?= wp_kses_post($tax->formatted_amount); ?></td>
                                                                 </tr>
@@ -441,7 +441,7 @@ if (filter_has_var(INPUT_GET, 'order')):
                                                 <div id="payment" class="woocommerce-checkout-payment">
 
                                                     <input type="radio" name="payment_method"
-                                                           id="payment_method_<?= $data['payment_method']; ?>" checked="checked"
+                                                           id="payment_method_<?= esc_attr($data['payment_method']); ?>" checked="checked"
                                                            value="<?= esc_html($data['payment_method']); ?>"/>
 
                                                     <input type="checkbox"
@@ -451,7 +451,7 @@ if (filter_has_var(INPUT_GET, 'order')):
 
                                                     <?php do_action('woocommerce_review_order_before_submit'); ?>
 
-                                                    <?= apply_filters('woocommerce_order_button_html', '<input type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="" />'); ?>
+                                                    <?= esc_html(apply_filters('woocommerce_order_button_html', '<input type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="" />')); ?>
 
                                                     <?php do_action('woocommerce_review_order_after_submit'); ?>
 
