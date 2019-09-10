@@ -144,7 +144,7 @@ function bt_image_make_intermediate_size( $file, $width, $height, $crop = false,
  * @param bool $crop Optional, default is false. Whether to crop image or resize.
  * @return bool|array False, on failure. Returned array matches parameters for imagecopyresampled() PHP function.
  */
-function bt_image_resize_dimensions($orig_w, $orig_h, $dest_w, $dest_h, $crop = false) {
+function resize_dimensions($orig_w, $orig_h, $dest_w, $dest_h, $crop = false) {
 
 	if ($orig_w <= 0 || $orig_h <= 0)
 		return false;
@@ -258,7 +258,7 @@ function bt_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, 
 	if ( $rotate )
 		list($max_h,$max_w) = array($max_w,$max_h);
 
-	$dims = bt_image_resize_dimensions($orig_w, $orig_h, $max_w, $max_h, $crop);
+	$dims = resize_dimensions($orig_w, $orig_h, $max_w, $max_h, $crop);
 	if ( !$dims )
 		return new WP_Error( 'error_getting_dimensions', __('Could not calculate resized image dimensions') );
 	list($dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h) = $dims;

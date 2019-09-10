@@ -205,8 +205,7 @@ class Templater
             // for WP version 4.7 and later
 
             // add filter per post type
-            foreach ($this->templates as $post_type => $custom_templates) {
-
+            foreach (array_keys($this->templates) as $post_type) {
                 add_filter(
                     'theme_' . $post_type . '_templates', array($this, 'add_new_template')
                 );
@@ -391,7 +390,7 @@ class Templater
         );
 
         // our new plugin template exists? use it
-        if (is_dir($plugin_template)) {
+        if (is_file($plugin_template)) {
             return $plugin_template;
         }
 
