@@ -9,9 +9,9 @@ function getValue(&$val, $default = '')
 }
 
 
-if (isset($_GET['order']) && !empty($_GET['order']))
+if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty($_GET['order']))
     global $woocommerce;
-    $data = json_decode(urldecode(base64_decode($_GET['order'])), true);
+    $data = isset($_GET['order']) ? json_decode(urldecode(base64_decode($_GET['order'])), true) : [];
 
     // Validate the cookie token
     $userId = wp_validate_auth_cookie($data['token'], 'logged_in');
