@@ -299,14 +299,11 @@ class MStoreDokan extends WP_REST_Controller
                 WHERE p.post_author = %d AND p.post_type = %s AND p.post_status = %s
                 AND ( cm.meta_key = %s OR cm.meta_key IS NULL) AND wc.comment_approved = %d
                 ORDER BY wc.comment_post_ID";
-
             $result = $wpdb->get_row($wpdb->prepare($sql, $product->get_id(), 'product', 'publish', 'rating', 1));
-
             $rating_value = array(
                 'rating' => number_format($result->average, 2),
                 'count' => (int) $result->count,
             );
-
             $data['rating'] = $rating_value;
         }
 

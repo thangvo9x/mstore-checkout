@@ -11,7 +11,7 @@ function getValue(&$val, $default = '')
 
 if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty($_GET['order']))
     global $woocommerce;
-    $data = isset($_GET['order']) ? json_decode(urldecode(base64_decode($_GET['order'])), true) : [];
+    $data = filter_has_var(INPUT_GET, 'order') ? json_decode(urldecode(base64_decode(sanitize_text_field($_GET['order']))), true) : [];
 
     // Validate the cookie token
     $userId = wp_validate_auth_cookie($data['token'], 'logged_in');
@@ -28,7 +28,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
             wp_set_current_user($userId, $user->user_login);
             wp_set_auth_cookie($userId);
 
-            $url = $_SERVER['REQUEST_URI'];
+            $url = filter_has_var(INPUT_SERVER, 'REQUEST_URI') ? filter_input(INPUT_SERVER, 'REQUEST_URI') : '';
             header("Refresh: 0; url=$url");
         }
     }
@@ -101,7 +101,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                         <form
                                                 name="checkout" method="post"
                                                 class="checkout woocommerce-checkout"
-                                                action="<?= get_bloginfo('url') ?>/checkout/"
+                                                action="<?= esc_url(get_bloginfo('url')); ?>/checkout/"
                                                 enctype="multipart/form-data">
                                             <?php do_action('woocommerce_checkout_before_customer_details'); ?>
                                             <div class="col2-set" id="customer_details">
@@ -119,7 +119,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_first_name" id="billing_first_name"
                                                                        placeholder=""
-                                                                       value="<?= isset($billing['first_name']) ? sanitize_text_field(getValue($billing['first_name'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['first_name']) ? esc_html(getValue($billing['first_name'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-last validate-required"
                                                                id="billing_last_name_field" data-priority="20">
@@ -129,7 +129,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_last_name" id="billing_last_name"
                                                                        placeholder=""
-                                                                       value="<?= isset($billing['last_name']) ? sanitize_text_field(getValue($billing['last_name'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['last_name']) ? esc_html(getValue($billing['last_name'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide" id="billing_company_field"
                                                                data-priority="30">
@@ -138,7 +138,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_company" id="billing_company"
                                                                        placeholder=""
-                                                                       value="<?= isset($data['billing_company']) ? sanitize_text_field(getValue($data['billing_company'])) : ''; ?>"/>
+                                                                       value="<?= isset($data['billing_company']) ? esc_html(getValue($data['billing_company'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
                                                                id="billing_country_field" data-priority="40">
@@ -148,7 +148,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_country" id="billing_country"
                                                                        placeholder=""
-                                                                       value="<?= isset($billing['country']) ? sanitize_text_field(getValue($billing['country'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['country']) ? esc_html(getValue($billing['country'])) : ''; ?>"/>
 
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-required"
@@ -159,14 +159,14 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_address_1" id="billing_address_1"
                                                                        placeholder="Street address"
-                                                                       value="<?= isset($billing['address_1']) ? sanitize_text_field(getValue($billing['address_1'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['address_1']) ? esc_html(getValue($billing['address_1'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field"
                                                                id="billing_address_2_field" data-priority="60">
                                                                 <input class="input-text "
                                                                        name="billing_address_2" id="billing_address_2"
                                                                        placeholder="Apartment, suite, unit etc. (optional)"
-                                                                       value="<?= isset($billing['address_2']) ? sanitize_text_field(getValue($billing['address_2'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['address_2']) ? esc_html(getValue($billing['address_2'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-required"
                                                                id="billing_city_field" data-priority="70">
@@ -176,7 +176,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_city" id="billing_city"
                                                                        placeholder=""
-                                                                       value="<?= isset($billing['city']) ? sanitize_text_field(getValue($billing['city'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['city']) ? esc_html(getValue($billing['city'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-state"
                                                                id="billing_state_field" style="display: none">
@@ -184,7 +184,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                     County</label>
                                                                 <input class="hidden" name="billing_state"
                                                                        id="billing_state"
-                                                                       value="<?= isset($billing['state']) ? sanitize_text_field(getValue($billing['state'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['state']) ? esc_html(getValue($billing['state'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-postcode"
                                                                id="billing_postcode_field" data-priority="65">
@@ -193,7 +193,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_postcode" id="billing_postcode"
                                                                        placeholder=""
-                                                                       value="<?= isset($billing['postcode']) ? sanitize_text_field(getValue($billing['postcode'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['postcode']) ? esc_html(getValue($billing['postcode'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-first validate-phone"
                                                                id="billing_phone_field" data-priority="100">
@@ -201,7 +201,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_phone" id="billing_phone"
                                                                        placeholder=""
-                                                                       value="<?= isset($billing['phone']) ? sanitize_text_field(getValue($billing['phone'])) : ''; ?>"/>
+                                                                       value="<?= isset($billing['phone']) ? esc_html(getValue($billing['phone'])) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-last validate-required validate-email"
                                                                id="billing_email_field" data-priority="110">
@@ -211,7 +211,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                 <input class="input-text "
                                                                        name="billing_email" id="billing_email"
                                                                        placeholder=""
-                                                                       value="<?= isset($billing['email']) ? sanitize_text_field(getValue($billing['email'])): ''; ?>"/>
+                                                                       value="<?= isset($billing['email']) ? esc_html(getValue($billing['email'])): ''; ?>"/>
                                                             </p>
                                                         </div>
 
@@ -240,7 +240,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                     <input class="input-text "
                                                                            name="shipping_first_name"
                                                                            id="shipping_first_name" placeholder=""
-                                                                           value="<?= isset($shipping['first_name']) ? sanitize_text_field(getValue($shipping['first_name'])) : ''; ?>"/>
+                                                                           value="<?= isset($shipping['first_name']) ? esc_html(getValue($shipping['first_name'])) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-last validate-required"
                                                                    id="shipping_last_name_field" data-priority="20">
@@ -250,7 +250,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                     <input class="input-text "
                                                                            name="shipping_last_name"
                                                                            id="shipping_last_name" placeholder=""
-                                                                           value="<?= isset($shipping['last_name']) ? sanitize_text_field(getValue($shipping['last_name'])): ''; ?>"/>
+                                                                           value="<?= isset($shipping['last_name']) ? esc_html(getValue($shipping['last_name'])): ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide"
                                                                    id="shipping_company_field" data-priority="30">
@@ -259,7 +259,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                     <input class="input-text "
                                                                            name="shipping_company" id="shipping_company"
                                                                            placeholder=""
-                                                                           value="<?= isset($shipping['company']) ? sanitize_text_field(getValue($shipping['company'])) : ''; ?>"/>
+                                                                           value="<?= isset($shipping['company']) ? esc_html(getValue($shipping['company'])) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
                                                                    id="shipping_country_field" data-priority="40">
@@ -270,7 +270,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                     <input class="input-text "
                                                                            name="shipping_country" id="shipping_country"
                                                                            placeholder=""
-                                                                           value="<?= isset($shipping['country']) ? sanitize_text_field(getValue($shipping['country'])) : ''; ?>"/>
+                                                                           value="<?= isset($shipping['country']) ? esc_html(getValue($shipping['country'])) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-required"
                                                                    id="shipping_address_1_field" data-priority="50">
@@ -281,7 +281,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                            name="shipping_address_1"
                                                                            id="shipping_address_1"
                                                                            placeholder="Street address"
-                                                                           value="<?= isset($shipping['address_1']) ? sanitize_text_field(getValue($shipping['address_1'])) : ''; ?>"/>
+                                                                           value="<?= isset($shipping['address_1']) ? esc_html(getValue($shipping['address_1'])) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field"
                                                                    id="shipping_address_2_field" data-priority="60">
@@ -289,7 +289,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                            name="shipping_address_2"
                                                                            id="shipping_address_2"
                                                                            placeholder="Apartment, suite, unit etc. (optional)"
-                                                                           value="<?= isset($shipping['address_2']) ? sanitize_text_field(getValue($shipping['address_2'])) : ''; ?>"/>
+                                                                           value="<?= isset($shipping['address_2']) ? esc_html(getValue($shipping['address_2'])) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-required"
                                                                    id="shipping_city_field" data-priority="70">
@@ -299,7 +299,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                     <input class="input-text "
                                                                            name="shipping_city" id="shipping_city"
                                                                            placeholder=""
-                                                                           value="<?= isset($shipping['city']) ? sanitize_text_field(getValue($shipping['city'])) : ''; ?>"/>
+                                                                           value="<?= isset($shipping['city']) ? esc_html(getValue($shipping['city'])) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-state"
                                                                    id="shipping_state_field" style="display: none">
@@ -307,7 +307,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                         County</label>
                                                                     <input class="hidden"
                                                                            name="shipping_state" id="shipping_state"
-                                                                           value="<?= isset($shipping['state']) ? sanitize_text_field(getValue($shipping['state'])) : ''; ?>"
+                                                                           value="<?= isset($shipping['state']) ? esc_html(getValue($shipping['state'])) : ''; ?>"
                                                                            placeholder=""/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-postcode"
@@ -317,7 +317,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                     <input class="input-text "
                                                                            name="shipping_postcode"
                                                                            id="shipping_postcode" placeholder=""
-                                                                           value="<?= isset($shipping['postcode']) ? sanitize_text_field(getValue($shipping['postcode'])) : '';; ?>"/>
+                                                                           value="<?= isset($shipping['postcode']) ? esc_html(getValue($shipping['postcode'])) : '';; ?>"/>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -333,7 +333,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                           id="order_comments"
                                                                           placeholder="Notes about your order, e.g. special notes for delivery."
                                                                           rows="2" cols="5"
-                                                                          value="<?= isset($data['customer_note']) ? sanitize_text_field($data['customer_note']) : ''; ?>"><?=  isset($data['customer_note']) ? sanitize_text_field($data['customer_note']) : ''; ?></textarea>
+                                                                          value="<?= isset($data['customer_note']) ? esc_html($data['customer_note']) : ''; ?>"><?=  isset($data['customer_note']) ? sanitize_text_field($data['customer_note']) : ''; ?></textarea>
                                                             </p>
                                                         </div>
                                                     </div>

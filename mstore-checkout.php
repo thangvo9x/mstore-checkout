@@ -29,7 +29,8 @@ class MstoreCheckOut
             return 0;
         }
 
-        if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && strlen($_GET['order']) > 0) {
+        $order = filter_has_var(INPUT_GET, 'order') ? filter_input(INPUT_GET, 'order') : false;
+        if ($order && isset($_GET['order']) && strlen($_GET['order']) > 0) {
             add_filter('woocommerce_is_checkout', '__return_true');
         }
 
