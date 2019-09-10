@@ -10,7 +10,7 @@
  * Text Domain: MStore-checkout
  */
 
-defined('ABSPATH') || exit();
+defined('ABSPATH') || die();
 
 // use MstoreCheckout\Templates\MobileDetect\MDetect;
 include plugin_dir_path(__FILE__) . 'templates/class-mobile-detect.php';
@@ -29,8 +29,8 @@ class MstoreCheckOut
             return 0;
         }
 
-        $order = filter_has_var(INPUT_GET, 'order') ? filter_input(INPUT_GET, 'order') : false;
-        if ($order && isset($_GET['order']) && strlen($_GET['order']) > 0) {
+        $order = filter_has_var(INPUT_GET, 'order') && strlen(filter_input(INPUT_GET, 'order')) > 0 ? true : false;
+        if ($order) {
             add_filter('woocommerce_is_checkout', '__return_true');
         }
 

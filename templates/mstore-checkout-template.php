@@ -9,9 +9,9 @@ function getValue(&$val, $default = '')
 }
 
 
-if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty($_GET['order']))
+if (filter_has_var(INPUT_GET, 'order')):
     global $woocommerce;
-    $data = filter_has_var(INPUT_GET, 'order') ? json_decode(urldecode(base64_decode(sanitize_text_field($_GET['order']))), true) : [];
+    $data = filter_has_var(INPUT_GET, 'order') ? json_decode(urldecode(base64_decode(filter_input(INPUT_GET, 'order'))), true) : [];
 
     // Validate the cookie token
     $userId = wp_validate_auth_cookie($data['token'], 'logged_in');
@@ -333,7 +333,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                                           id="order_comments"
                                                                           placeholder="Notes about your order, e.g. special notes for delivery."
                                                                           rows="2" cols="5"
-                                                                          value="<?= isset($data['customer_note']) ? esc_html($data['customer_note']) : ''; ?>"><?=  isset($data['customer_note']) ? sanitize_text_field($data['customer_note']) : ''; ?></textarea>
+                                                                          value="<?= isset($data['customer_note']) ? esc_html($data['customer_note']) : ''; ?>"><?=  isset($data['customer_note']) ? esc_html($data['customer_note']) : ''; ?></textarea>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -343,7 +343,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
 
                                             <?php do_action('woocommerce_checkout_after_customer_details'); ?>
 
-                                            <h3 id="order_review_heading"><?php _e('Your order', 'woocommerce'); ?></h3>
+                                            <h3 id="order_review_heading"><?php esc_html_e('Your order', 'woocommerce'); ?></h3>
 
                                             <?php do_action('woocommerce_checkout_before_order_review'); ?>
 
@@ -351,8 +351,8 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                 <table class="shop_table">
                                                     <thead>
                                                     <tr>
-                                                        <th class="product-name"><?php _e('Product', 'woocommerce'); ?></th>
-                                                        <th class="product-total"><?php _e('Total', 'woocommerce'); ?></th>
+                                                        <th class="product-name"><?php esc_html_e('Product', 'woocommerce'); ?></th>
+                                                        <th class="product-total"><?php esc_html_e('Total', 'woocommerce'); ?></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -379,7 +379,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                     </tbody>
                                                     <tfoot>
                                                     <tr class="cart-subtotal">
-                                                        <th><?php _e('Subtotal', 'woocommerce'); ?></th>
+                                                        <th><?php esc_html_e('Subtotal', 'woocommerce'); ?></th>
                                                         <td><?php wc_cart_totals_subtotal_html(); ?></td>
                                                     </tr>
 
@@ -396,8 +396,8 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                             <th>Shipping</th>
                                                             <td><input type="radio" checked="checked"
                                                                        class="shipping_method" name="shipping_method[]"
-                                                                       id="shipping_method__<?= $shippingMethod ?>"
-                                                                       value="<?= $shippingMethod; ?>"/>
+                                                                       id="shipping_method__<?= esc_html($shippingMethod); ?>"
+                                                                       value="<?= esc_html($shippingMethod); ?>"/>
                                                             </td>
                                                         </tr>
 
@@ -427,7 +427,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
                                                     <?php endif; ?>
 
                                                     <tr class="order-total">
-                                                        <th><?php _e('Total', 'woocommerce'); ?></th>
+                                                        <th><?php esc_html_e('Total', 'woocommerce'); ?></th>
                                                         <td><?php wc_cart_totals_order_total_html(); ?></td>
                                                     </tr>
 
@@ -442,7 +442,7 @@ if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && !empty
 
                                                     <input type="radio" name="payment_method"
                                                            id="payment_method_<?= $data['payment_method']; ?>" checked="checked"
-                                                           value="<?= $data['payment_method']; ?>"/>
+                                                           value="<?= esc_html($data['payment_method']); ?>"/>
 
                                                     <input type="checkbox"
                                                            class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox"
