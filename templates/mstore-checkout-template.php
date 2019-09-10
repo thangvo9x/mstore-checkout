@@ -119,7 +119,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_first_name" id="billing_first_name"
                                                                        placeholder=""
-                                                                       value="<?= getValue($billing['first_name']); ?>"/>
+                                                                       value="<?= isset($billing['first_name']) ? getValue($billing['first_name']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-last validate-required"
                                                                id="billing_last_name_field" data-priority="20">
@@ -129,7 +129,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_last_name" id="billing_last_name"
                                                                        placeholder=""
-                                                                       value="<?= getValue($billing['last_name']); ?>"/>
+                                                                       value="<?= isset($billing['last_name']) ? getValue($billing['last_name']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide" id="billing_company_field"
                                                                data-priority="30">
@@ -138,7 +138,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_company" id="billing_company"
                                                                        placeholder=""
-                                                                       value="<?= getValue($data['billing_company']); ?>"/>
+                                                                       value="<?= isset($data['billing_company']) ? getValue($data['billing_company']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
                                                                id="billing_country_field" data-priority="40">
@@ -148,7 +148,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_country" id="billing_country"
                                                                        placeholder=""
-                                                                       value="<?= getValue($billing['country']); ?>"/>
+                                                                       value="<?= isset($billing['country']) ? getValue($billing['country']) : ''; ?>"/>
 
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-required"
@@ -159,14 +159,14 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_address_1" id="billing_address_1"
                                                                        placeholder="Street address"
-                                                                       value="<?= getValue($billing['address_1']); ?>"/>
+                                                                       value="<?= isset($billing['address_1']) ? getValue($billing['address_1']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field"
                                                                id="billing_address_2_field" data-priority="60">
                                                                 <input class="input-text "
                                                                        name="billing_address_2" id="billing_address_2"
                                                                        placeholder="Apartment, suite, unit etc. (optional)"
-                                                                       value="<?= getValue($billing['address_2']); ?>"/>
+                                                                       value="<?= isset($billing['address_2']) ? getValue($billing['address_2']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-required"
                                                                id="billing_city_field" data-priority="70">
@@ -176,7 +176,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_city" id="billing_city"
                                                                        placeholder=""
-                                                                       value="<?= getValue($billing['city']); ?>"/>
+                                                                       value="<?= isset($billing['city']) ? getValue($billing['city']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-state"
                                                                id="billing_state_field" style="display: none">
@@ -184,7 +184,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                     County</label>
                                                                 <input class="hidden" name="billing_state"
                                                                        id="billing_state"
-                                                                       value="<?= getValue($billing['state']); ?>"/>
+                                                                       value="<?= isset($billing['state']) ? getValue($billing['state']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-wide address-field validate-postcode"
                                                                id="billing_postcode_field" data-priority="65">
@@ -193,7 +193,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_postcode" id="billing_postcode"
                                                                        placeholder=""
-                                                                       value="<?= getValue($billing['postcode']); ?>"/>
+                                                                       value="<?= isset($billing['postcode']) ? getValue($billing['postcode']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-first validate-phone"
                                                                id="billing_phone_field" data-priority="100">
@@ -201,7 +201,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_phone" id="billing_phone"
                                                                        placeholder=""
-                                                                       value="<?= getValue($billing['phone']); ?>"/>
+                                                                       value="<?= isset($billing['phone']) ? getValue($billing['phone']) : ''; ?>"/>
                                                             </p>
                                                             <p class="form-row form-row-last validate-required validate-email"
                                                                id="billing_email_field" data-priority="110">
@@ -211,7 +211,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                 <input class="input-text "
                                                                        name="billing_email" id="billing_email"
                                                                        placeholder=""
-                                                                       value="<?= getValue($billing['email']); ?>"/>
+                                                                       value="<?= isset($billing['email']) ? getValue($billing['email']): ''; ?>"/>
                                                             </p>
                                                         </div>
 
@@ -240,7 +240,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                     <input class="input-text "
                                                                            name="shipping_first_name"
                                                                            id="shipping_first_name" placeholder=""
-                                                                           value="<?= getValue($shipping['first_name']); ?>"/>
+                                                                           value="<?= isset($shipping['first_name']) ? getValue($shipping['first_name']) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-last validate-required"
                                                                    id="shipping_last_name_field" data-priority="20">
@@ -250,7 +250,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                     <input class="input-text "
                                                                            name="shipping_last_name"
                                                                            id="shipping_last_name" placeholder=""
-                                                                           value="<?= getValue($shipping['last_name']); ?>"/>
+                                                                           value="<?= isset($shipping['last_name']) ? getValue($shipping['last_name']): ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide"
                                                                    id="shipping_company_field" data-priority="30">
@@ -259,7 +259,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                     <input class="input-text "
                                                                            name="shipping_company" id="shipping_company"
                                                                            placeholder=""
-                                                                           value="<?= getValue($shipping['company']); ?>"/>
+                                                                           value="<?= isset($shipping['company']) ? getValue($shipping['company']) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
                                                                    id="shipping_country_field" data-priority="40">
@@ -270,7 +270,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                     <input class="input-text "
                                                                            name="shipping_country" id="shipping_country"
                                                                            placeholder=""
-                                                                           value="<?= getValue($shipping['country']); ?>"/>
+                                                                           value="<?= isset($shipping['country']) ? getValue($shipping['country']) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-required"
                                                                    id="shipping_address_1_field" data-priority="50">
@@ -281,7 +281,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                            name="shipping_address_1"
                                                                            id="shipping_address_1"
                                                                            placeholder="Street address"
-                                                                           value="<?= getValue($shipping['address_1']); ?>"/>
+                                                                           value="<?= isset($shipping['address_1']) ? getValue($shipping['address_1']) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field"
                                                                    id="shipping_address_2_field" data-priority="60">
@@ -289,7 +289,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                            name="shipping_address_2"
                                                                            id="shipping_address_2"
                                                                            placeholder="Apartment, suite, unit etc. (optional)"
-                                                                           value="<?= getValue($shipping['address_2']); ?>"/>
+                                                                           value="<?= isset($shipping['address_2']) ? getValue($shipping['address_2']) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-required"
                                                                    id="shipping_city_field" data-priority="70">
@@ -299,7 +299,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                     <input class="input-text "
                                                                            name="shipping_city" id="shipping_city"
                                                                            placeholder=""
-                                                                           value="<?= getValue($shipping['city']); ?>"/>
+                                                                           value="<?= isset($shipping['city']) ? getValue($shipping['city']) : ''; ?>"/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-state"
                                                                    id="shipping_state_field" style="display: none">
@@ -307,7 +307,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                         County</label>
                                                                     <input class="hidden"
                                                                            name="shipping_state" id="shipping_state"
-                                                                           value="<?= getValue($shipping['state']); ?>"
+                                                                           value="<?= isset($shipping['state']) ? getValue($shipping['state']): ''; ?>"
                                                                            placeholder=""/>
                                                                 </p>
                                                                 <p class="form-row form-row-wide address-field validate-postcode"
@@ -317,7 +317,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                     <input class="input-text "
                                                                            name="shipping_postcode"
                                                                            id="shipping_postcode" placeholder=""
-                                                                           value="<?= getValue($shipping['postcode']);; ?>"/>
+                                                                           value="<?= isset($shipping['postcode']) ? getValue($shipping['postcode']) : '';; ?>"/>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -333,7 +333,7 @@ if (isset($_GET['order']) && !empty($_GET['order']))
                                                                           id="order_comments"
                                                                           placeholder="Notes about your order, e.g. special notes for delivery."
                                                                           rows="2" cols="5"
-                                                                          value="<?= $data['customer_note']; ?>"><?= $data['customer_note']; ?></textarea>
+                                                                          value="<?= isset($data['customer_note']) ? $data['customer_note'] : ''; ?>"><?=  isset($data['customer_note']) ? $data['customer_note'] : ''; ?></textarea>
                                                             </p>
                                                         </div>
                                                     </div>

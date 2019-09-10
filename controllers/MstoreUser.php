@@ -22,7 +22,7 @@ class JSON_API_MStore_User_Controller
         // allow only connection over https. because, well, you care about your passwords and sniffing.
         // turn this sanity-check off if you feel safe inside your localhost or intranet.
         // send an extra POST parameter: insecure=cool
-        if (filter_has_var(INPUT_SERVER, $_SERVER['HTTPS']) ||
+        if (isset($_SERVER['HTTPS']) && filter_has_var(INPUT_SERVER, $_SERVER['HTTPS']) ||
             (isset($_SERVER['HTTPS']) && filter_has_var(INPUT_SERVER, $_SERVER['HTTPS']) && $_SERVER['HTTPS']== 'off')) {
             if (filter_has_var(INPUT_GET, $_REQUEST['insecure']) && empty($_REQUEST['insecure']) || $_REQUEST['insecure'] != 'cool') {
                 $json_api->error("SSL is not enabled. Either use _https_ or provide 'insecure' var as insecure=cool to confirm you want to use http protocol.");
