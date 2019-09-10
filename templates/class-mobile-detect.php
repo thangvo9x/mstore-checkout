@@ -1,6 +1,5 @@
 <?php
 // namespace MstoreCheckout\Templates\MobileDetect;
-
 /**
  * Mobile Detect Library
  * =====================
@@ -26,9 +25,7 @@
  *
  * @version     2.8.27
  */
-
 if(!class_exists('MDetect')) {
-
 class MDetect
 {
     /**
@@ -709,7 +706,7 @@ class MDetect
     {
         // use global _SERVER if $httpHeaders aren't defined
         if (!is_array($httpHeaders) || !count($httpHeaders)) {
-            $httpHeaders = filter_has_var(INPUT_SERVER, $_SERVER);
+            $httpHeaders = filter_has_var(INPUT_SERVER, $_SERVER) ? $_SERVER : 'Mozilla';
         }
 
         // clear existing headers

@@ -10,13 +10,11 @@
  * Text Domain: MStore-checkout
  */
 
-if (!defined('ABSPATH')) {
-    exit;
-}
+defined('ABSPATH') || exit;
 
 // use MstoreCheckout\Templates\MobileDetect\MDetect;
-include plugin_dir_path(__FILE__).'templates/class-mobile-detect.php';
-include plugin_dir_path(__FILE__).'templates/class-rename-generate.php';
+include plugin_dir_path(__FILE__) . 'templates/class-mobile-detect.php';
+include plugin_dir_path(__FILE__) . 'templates/class-rename-generate.php';
 
 class MstoreCheckOut
 {
@@ -26,20 +24,19 @@ class MstoreCheckOut
     {
         define('MSTORE_CHECKOUT_VERSION', $this->version);
         define('MSTORE_PLUGIN_FILE', __FILE__);
-        include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('woocommerce/woocommerce.php') == false) {
             return 0;
         }
 
-
-        if (isset($_GET['order']) && strlen($_GET['order'])>0) {
-            add_filter('woocommerce_is_checkout', '__return_true'); 
+        if (filter_has_var(INPUT_GET, $_GET['order']) && isset($_GET['order']) && strlen($_GET['order']) > 0) {
+            add_filter('woocommerce_is_checkout', '__return_true');
         }
 
-        include_once plugin_dir_path(__FILE__).'controllers/MstoreDokan.php';
+        include_once plugin_dir_path(__FILE__) . 'controllers/MstoreDokan.php';
         /* Checkout Template*/
 //        require_once('templates/class-page-templater.php');
-//        add_action('plugins_loaded', array('PageTemplater', 'get_instance'));
+        //        add_action('plugins_loaded', array('PageTemplater', 'get_instance'));
         // require_once __DIR__ . '/wp-templater/src/Templater.php';
         // require_once __DIR__ . '/templates/class-mobile-detect.php';
         add_action('wp_print_scripts', array($this, 'handle_received_order_page'));
@@ -62,12 +59,12 @@ class MstoreCheckOut
 $mstoreCheckOut = new MstoreCheckOut();
 
 // use JO\Module\Templater\Templater;
-include plugin_dir_path(__FILE__).'wp-templater/src/Templater.php';
+include plugin_dir_path(__FILE__) . 'wp-templater/src/Templater.php';
 
 add_action('plugins_loaded', 'load_templater');
 function load_templater()
 {
-    
+
     // add our new custom templates
     $my_templater = new Templater(
         array(
@@ -87,7 +84,6 @@ function load_templater()
         )
     )->register();
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Define for the API User wrapper which is based on json api user plugin

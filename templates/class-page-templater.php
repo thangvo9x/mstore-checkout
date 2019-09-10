@@ -130,7 +130,7 @@ class PageTemplater
         if (file_exists($file)) {
             return $file;
         } else {
-            echo $file;
+            return $file;
         }
         // Return template
         return $template;
