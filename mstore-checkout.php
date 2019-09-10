@@ -10,7 +10,7 @@
  * Text Domain: MStore-checkout
  */
 
-defined('ABSPATH') || die();
+defined('ABSPATH');
 
 // use MstoreCheckout\Templates\MobileDetect\MDetect;
 include plugin_dir_path(__FILE__) . 'templates/class-mobile-detect.php';

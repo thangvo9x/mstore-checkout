@@ -124,7 +124,7 @@ class JSON_API_MStore_User_Controller
                         'comment_shortcuts', 'admin_color', 'use_ssl', 'show_admin_bar_front',
                     );
 
-                    $dataRequest = filter_input_array(INPUT_GET, $_REQUEST);
+                    $dataRequest = filter_input_array(INPUT_GET);
                     foreach ($dataRequest as $field => $value) {
                         if (in_array($field, $allowed_params)) {
                             $user[$field] = trim(sanitize_text_field($value));
@@ -184,7 +184,7 @@ class JSON_API_MStore_User_Controller
 
         global $json_api;
 
-        $dataPost = filter_input_array(INPUT_POST, $_POST);
+        $dataPost = filter_input_array(INPUT_POST);
         foreach ($dataPost as $k => $val) {
             if (filter_has_var(INPUT_POST,$k)) {
                 $json_api->query->$k = $val;
