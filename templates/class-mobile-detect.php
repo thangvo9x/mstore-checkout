@@ -706,8 +706,8 @@ if (!class_exists('MDetect')) {
         {
             // use global _SERVER if $httpHeaders aren't defined
             if (!is_array($httpHeaders) || !count($httpHeaders)) {
-                
-                $httpHeaders = filter_input_array(INPUT_SERVER, $_SERVER) ? filter_input_array(INPUT_SERVER, $_SERVER) : 'Mozilla';
+
+                $httpHeaders = filter_input_array(INPUT_SERVER, $_SERVER);
             }
 
             // clear existing headers
@@ -794,7 +794,7 @@ if (!class_exists('MDetect')) {
         {
             // use global _SERVER if $cfHeaders aren't defined
             if (!is_array($cfHeaders) || !count($cfHeaders)) {
-                $cfHeaders = filter_input_array(INPUT_SERVER, $_SERVER) ? filter_input_array(INPUT_SERVER, $_SERVER) : '';
+                $cfHeaders = filter_input_array(INPUT_SERVER, $_SERVER);
             }
 
             // clear existing headers
