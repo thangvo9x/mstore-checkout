@@ -22,9 +22,9 @@ class JSON_API_MStore_User_Controller
         // allow only connection over https. because, well, you care about your passwords and sniffing.
         // turn this sanity-check off if you feel safe inside your localhost or intranet.
         // send an extra POST parameter: insecure=cool
-        if (isset($_SERVER['HTTPS']) && filter_has_var(INPUT_SERVER, $_SERVER['HTTPS']) ||
-            (isset($_SERVER['HTTPS']) && filter_has_var(INPUT_SERVER, $_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'off')) {
-            if (filter_has_var(INPUT_GET, $_REQUEST['insecure']) && empty($_REQUEST['insecure']) || $_REQUEST['insecure'] != 'cool') {
+        if (filter_has_var(INPUT_SERVER, 'HTTPS') ||
+            (filter_has_var(INPUT_SERVER, 'HTTPS') && filter_input(INPUT_SERVER, 'HTTPS') == 'off')) {
+            if (filter_has_var(INPUT_GET, 'insecure')  || filter_input(INPUT_GET, 'insecure') != 'cool') {
                 $json_api->error("SSL is not enabled. Either use _https_ or provide 'insecure' var as insecure=cool to confirm you want to use http protocol.");
             }
         }
@@ -102,14 +102,21 @@ class JSON_API_MStore_User_Controller
 
                     //Everything has been validated, proceed with creating the user
                     //Create the user
-                    if (!filter_input(INPUT_GET, 'user_pass')) {
-                        $user_pass = wp_generate_password();
-                        $_REQUEST['user_pass'] = $user_pass;
+                    if (!filter_has_var(INPUT_GET, 'user_pass')) {
+                        $args = [
+                            'user_pass' => wp_generate_password()
+                        ];
+                        filter_input_array(INPUT_GET, $args);
                     }
 
-                    if (filter_input(INPUT_GET, 'user_login') && filter_input(INPUT_GET, 'user_email')) {
-                        $_REQUEST['user_login'] = $username;
-                        $_REQUEST['user_email'] = $email;
+                    if (filter_has_var(INPUT_GET, 'user_login') && filter_has_var(INPUT_GET, 'user_email')) {
+                        // filter_input_array(INPUT_GET, $_REQUEST['user_login']) = $username;
+                        // filter_input_array(INPUT_GET, $_REQUEST['user_email']) = $email;
+                        $argsBelow = [
+                            'user_login' => $username,
+                            'user_email' => $email
+                        ];
+                        filter_input_array(INPUT_GET, $argsBelow);
                     }
 
                     $allowed_params = array('user_login', 'user_email', 'user_pass', 'display_name', 'user_nicename', 'user_url', 'nickname', 'first_name',
@@ -118,7 +125,7 @@ class JSON_API_MStore_User_Controller
                     );
 
                     if (filter_has_var(INPUT_GET, $_REQUEST)) {
-                        foreach ($_REQUEST as $field => $value) {
+                        foreach (filter_input_array(INPUT_GET, $_REQUEST) as $field => $value) {
                             if (in_array($field, $allowed_params)) {
                                 $user[$field] = trim(sanitize_text_field($value));
                             }
