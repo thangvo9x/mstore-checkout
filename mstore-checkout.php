@@ -13,9 +13,9 @@
 defined('ABSPATH') or wp_die( 'No script kiddies please!' );
 
 // use MstoreCheckout\Templates\MobileDetect\MDetect;
-$baseUrl = plugin_dir_path(__FILE__);
-include ($baseUrl."templates/class-mobile-detect.php");
-include ($baseUrl."templates/class-rename-generate.php");
+
+include __DIR__."templates/class-mobile-detect.php";
+include __DIR__."templates/class-rename-generate.php";
 
 class MstoreCheckOut
 {
@@ -35,7 +35,7 @@ class MstoreCheckOut
             add_filter('woocommerce_is_checkout', '__return_true');
         }
 
-        include_once ($baseUrl."controllers/MstoreDokan.php");
+        include_once __DIR__."controllers/MstoreDokan.php";
         /* Checkout Template*/
 //        require_once('templates/class-page-templater.php');
         //        add_action('plugins_loaded', array('PageTemplater', 'get_instance'));
@@ -61,7 +61,7 @@ class MstoreCheckOut
 $mstoreCheckOut = new MstoreCheckOut();
 
 // use JO\Module\Templater\Templater;
-include ($baseUrl."wp-templater/src/Templater.php");
+include __DIR__."wp-templater/src/Templater.php";
 
 add_action('plugins_loaded', 'load_templater');
 function load_templater()

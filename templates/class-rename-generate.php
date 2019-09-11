@@ -319,6 +319,5 @@ function image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $de
 	$stat = stat( dirname( $destfilename ));
 	$perms = $stat['mode'] & 0000666; //same permissions as parent folder, strip off the executable bits
 	@ chmod( $destfilename, octdec($perms) );
-
 	return $destfilename;
 }

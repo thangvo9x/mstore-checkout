@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * Base REST Controller for mstore
  *
  * @since 1.0.0
