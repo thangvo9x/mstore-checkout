@@ -304,7 +304,7 @@ class JSON_API_MStore_User_Controller
                         $i++;
                         $user_name = strtolower($result['first_name'] . '.' . $result['last_name']) . '.' . $i;
                     }
-                    $random_password = wp_generate_password($length = 12, $include_standard_special_chars = false);
+                    $random_password = wp_generate_password();
                     $userdata = array(
                         'user_login' => $user_name,
                         'user_email' => $user_email,

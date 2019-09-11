@@ -14,8 +14,8 @@ defined('ABSPATH') or wp_die( 'No script kiddies please!' );
 
 // use MstoreCheckout\Templates\MobileDetect\MDetect;
 $baseUrl = plugin_dir_path(__FILE__);
-include ("{$baseUrl}templates/class-mobile-detect.php");
-include ("{$baseUrl}templates/class-rename-generate.php");
+include ($baseUrl."templates/class-mobile-detect.php");
+include ($baseUrl."templates/class-rename-generate.php");
 
 class MstoreCheckOut
 {
@@ -35,7 +35,7 @@ class MstoreCheckOut
             add_filter('woocommerce_is_checkout', '__return_true');
         }
 
-        include_once ("{$baseUrl}controllers/MstoreDokan.php");
+        include_once ($baseUrl."controllers/MstoreDokan.php");
         /* Checkout Template*/
 //        require_once('templates/class-page-templater.php');
         //        add_action('plugins_loaded', array('PageTemplater', 'get_instance'));
@@ -61,7 +61,7 @@ class MstoreCheckOut
 $mstoreCheckOut = new MstoreCheckOut();
 
 // use JO\Module\Templater\Templater;
-include ("{$baseUrl}wp-templater/src/Templater.php");
+include ($baseUrl."wp-templater/src/Templater.php");
 
 add_action('plugins_loaded', 'load_templater');
 function load_templater()
@@ -98,7 +98,7 @@ if (!is_plugin_active('json-api/json-api.php')) {
 
 add_filter('json_api_controllers', 'registerJsonApiController');
 add_filter('json_api_mstore_user_controller_path', 'setMstoreUserControllerPath');
-add_action('init', 'json_api_mstore_user_checkAuthCookie', 100);
+add_action('init', 'json_apiCheckAuthCookie', 100);
 
 function registerJsonApiController($aControllers)
 {
@@ -108,10 +108,10 @@ function registerJsonApiController($aControllers)
 
 function setMstoreUserControllerPath()
 {
-    return dirname(__FILE__) . '/controllers/MstoreUser.php';
+    return plugin_dir_path(__FILE__) . '/controllers/MstoreUser.php';
 }
 
-function json_api_mstore_user_checkAuthCookie()
+function json_apiCheckAuthCookie()
 {
     global $json_api;
 
