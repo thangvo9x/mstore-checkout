@@ -127,7 +127,7 @@ class PageTemplater
                 $post->ID, '_wp_page_template', true
             );
         // Just to be safe, we check if the file exist first
-        if (WP_Filesystem_Base::is_file($file)) {
+        if (WP_Filesystem_Base()->is_file($file)) {
             return $file;
         } else {
             return $file;

@@ -88,7 +88,7 @@ class MStoreDokan extends WP_REST_Controller
      *
      * @return json
      */
-    public function get_stores_handy($request)
+    public function get_stores_handy()
     {
 
         $vendors = array();
@@ -104,7 +104,7 @@ class MStoreDokan extends WP_REST_Controller
         $user_query = new WP_User_Query($args);
         $results = $user_query->get_results();
 
-        foreach ($results as $key => $result) {
+        foreach ($results as $result) {
             $meta = get_user_meta($result->data->ID);
             $meta = array_filter(array_map(function ($item) {
                 return $item[0];
@@ -179,8 +179,8 @@ class MStoreDokan extends WP_REST_Controller
 
         foreach ($objects as $object) {
 
-            $data = $this->prepare_data_for_response($object, $request);
-            $data_objects[] = $this->prepare_response_for_collection($data);
+            $data = $this->prepare_response($object, $request);
+            $data_objects[] = $this->prepare_collection($data);
         }
 
         $response = rest_ensure_response($data_objects);
@@ -194,12 +194,7 @@ class MStoreDokan extends WP_REST_Controller
         return wc_get_product($product);
     }
 
-    protected function prepare_data_for_response($product, $request)
-    {
-
-        $context = !empty($request['context']) ? $request['context'] : 'view';
-        $author_id = get_post_field('post_author', $product->get_id());
-
+    protected function getData($product, $context){
         $data = array(
             'id' => $product->get_id(),
             'name' => $product->get_name($context),
@@ -273,6 +268,16 @@ class MStoreDokan extends WP_REST_Controller
             'meta_data' => $product->get_meta_data(),
 
         );
+        return $data;
+    }
+
+    protected function prepare_response($product, $request)
+    {
+
+        $context = !empty($request['context']) ? $request['context'] : 'view';
+        $author_id = get_post_field('post_author', $product->get_id());
+
+        $data = $this->getData($product, $context);
 
         if ($this->template != 'handystore') {
             $store = dokan()->vendor->get($author_id);
@@ -310,7 +315,7 @@ class MStoreDokan extends WP_REST_Controller
         return apply_filters("rest_prepare_{$this->post_type}_object", $response, $product, $request);
     }
 
-    public function prepare_response_for_collection($response)
+    public function prepare_collection($response)
     {
         if (!($response instanceof WP_REST_Response)) {
             return $response;
@@ -320,9 +325,9 @@ class MStoreDokan extends WP_REST_Controller
         $server = rest_get_server();
 
         if (method_exists($server, 'get_compact_response_links')) {
-            $links = call_user_func(array($server, 'get_compact_response_links'), $response);
+            $links = $server->get_compact_response_links($response);
         } else {
-            $links = call_user_func(array($server, 'get_response_links'), $response);
+            $links = $server->get_compact_response_links($response);
         }
 
         if (!empty($links)) {
@@ -536,7 +541,8 @@ class MStoreDokan extends WP_REST_Controller
         return array();
     }
 
-    protected function prepare_links($object, $request)
+    /// Params $request is unused
+    protected function prepare_links($object)
     {
         $links = array(
             'self' => array(
