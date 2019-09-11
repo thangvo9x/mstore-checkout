@@ -390,7 +390,7 @@ class Templater
         );
 
         // our new plugin template exists? use it
-        if (WP_Filesystem_Base::is_file($plugin_template)) {
+        if (WP_Filesystem_Base()->is_file($plugin_template)) {
             return $plugin_template;
         }
 

@@ -346,11 +346,17 @@ class JSON_API_MStore_User_Controller
         } else {
             $url = 'https://graph.accountkit.com/v1.3/me/?access_token=' . $json_api->query->access_token;
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $result = curl_exec($ch);
-            curl_close($ch);
+            $WP_Http_Curl = new WP_Http_Curl();
+            $result = $WP_Http_Curl->request( $url, array(
+                'method'      => 'GET',
+                'timeout'     => 5,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                'blocking'    => true,
+                'headers'     => array(),
+                'body'        => null,
+                'cookies'     => array(),
+            ));
 
             $result = json_decode($result, true);
 
