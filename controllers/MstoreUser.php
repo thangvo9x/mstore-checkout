@@ -285,15 +285,27 @@ class JSON_API_MStore_User_Controller
 
             $url = 'https://graph.facebook.com/me/?fields=' . $fields . '&access_token=' . $json_api->query->access_token;
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            $result = curl_exec($ch);
-            curl_close($ch);
+            // $ch = curl_init();
+            // curl_setopt($ch, CURLOPT_URL, $url);
+            // curl_setopt($ch, CURLOPT_HEADER, 0);
+            // curl_setopt($ch, CURLOPT_POST, 1);
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            // $result = curl_exec($ch);
+            // curl_close($ch);
+
+            $WP_Http_Curl = new WP_Http_Curl();
+            $result = $WP_Http_Curl->request( $url, array(
+                'method'      => 'POST',
+                'timeout'     => 5,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                'blocking'    => true,
+                'headers'     => array(),
+                'body'        => null,
+                'cookies'     => array(),
+            ));
 
             $result = json_decode($result, true);
 

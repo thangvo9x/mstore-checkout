@@ -385,7 +385,7 @@ class MStoreDokan extends WP_REST_Controller
         // Build image data.
         foreach ($attachment_ids as $position => $attachment_id) {
             $attachment_post = get_post($attachment_id);
-            if (is_null($attachment_post)) {
+            if (empty($attachment_post)) {
                 continue;
             }
 

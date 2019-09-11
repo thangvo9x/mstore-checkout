@@ -268,12 +268,11 @@ function bt_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, 
 	if ( $rotate )
 		list($src_y,$src_x) = array($src_x,$src_y);
 
-	imagecopyresampled( $newimage, $image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
-
+	// imagecopyresampled( $newimage, $image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+	imagecopyresized( $newimage, $image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
 	// convert from full colors to index colors, like original PNG.
 	if ( IMAGETYPE_PNG == $orig_type && function_exists('imageistruecolor') && !imageistruecolor( $image ) )
 		imagetruecolortopalette( $newimage, false, imagecolorstotal( $image ) );
-
 	// we don't need the original in memory anymore
 	imagedestroy( $image );
 
@@ -285,9 +284,11 @@ function bt_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, 
 			$suffix = "{$dst_w}x{$dst_h}";
 	}
 
-	$info = pathinfo($file);
-	$dir = $info['dirname'];
-	$ext = $info['extension'];
+	// $info = pathinfo($file);
+	// $dir = $info['dirname'];
+	// $ext = $info['extension'];
+	$dir = dirname($file);
+	$ext = wp_check_filetype($file)['ext'];
 	$name = wp_basename($file, ".$ext");
 
 	if ( !is_null($dest_path) and $_dest_path = realpath($dest_path) )
