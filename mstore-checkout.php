@@ -10,7 +10,7 @@
  * Text Domain: MStore-checkout
  */
 
-defined('ABSPATH') or die( 'No script kiddies please!' );
+defined('ABSPATH') or wp_die( 'No script kiddies please!' );
 
 // use MstoreCheckout\Templates\MobileDetect\MDetect;
 $baseUrl = plugin_dir_path(__FILE__);
