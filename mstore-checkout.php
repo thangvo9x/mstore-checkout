@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: Mstore CheckOut Plugin and API
- * Plugin URI: http://inspireui.com
- * Description: The MStore Checkout Wordpress Plugin which use for the Mstore app - Complete React Native template for e-commerce
+ * Plugin Name: Mstore API
+ * Plugin URI: https://github.com/thangvo9x/mstore-checkout
+ * Description: The MStore App Wordpress Plugin which use for the Mstore app - Complete React Native template for e-commerce
  * Version: 1.1.5
  * Author: InspireUI
  * Author URI: http://inspireui.com
  *
- * Text Domain: MStore-checkout
+ * Text Domain: MStore-Api
  */
 
 defined('ABSPATH') or wp_die( 'No script kiddies please!' );

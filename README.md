@@ -1,4 +1,4 @@
-=== MStore Checkout ===
+=== MStore API ===
 
 Contributors: InsireUI
 
@@ -26,15 +26,15 @@ The plugin is used for config the Mstore mobile and support RestAPI to connect t
 
 = Manual Installation =
 
-1. Upload the entire `/mstore-checkout` directory to the `/wp-content/plugins/` directory.
+ 1. Upload the entire `/mstore-api` directory to the `/wp-content/plugins/` directory.
 
-2. Activate 'MStore Checkout' through the 'Plugins' menu in WordPress.
+ 2. Activate 'MStore API' through the 'Plugins' menu in WordPress.
 
 = Better Installation =
 
-1. Go to Plugins > Add New in your WordPress admin and search for 'MStore Checkout'.
+ 1. Go to Plugins > Add New in your WordPress admin and search for 'MStore API'.
 
-2. Click Install.
+ 2. Click Install.
 
 == Changelog ==
 = 1.0.0 =
